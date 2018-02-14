@@ -6,21 +6,21 @@
 /*   By: snadaras <snadaras@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/19 14:28:37 by snadaras          #+#    #+#             */
-/*   Updated: 2017/12/22 22:28:50 by snadaras         ###   ########.fr       */
+/*   Updated: 2018/02/14 19:51:17 by snadaras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include "./libft/includes/libft.h"
+# include "./libft/libft.h"
 # include <sys/types.h>
 # include <sys/uio.h>
 
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
-# define BUFF_SIZE 10
+# define BUFF_SIZE 20
 # define ENDL '\n'
 # define END '\0'
 

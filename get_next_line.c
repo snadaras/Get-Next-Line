@@ -6,30 +6,30 @@
 /*   By: snadaras <snadaras@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 18:45:10 by snadaras          #+#    #+#             */
-/*   Updated: 2017/12/22 22:29:12 by snadaras         ###   ########.fr       */
+/*   Updated: 2018/02/14 19:50:38 by snadaras         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft/includes/libft.h"
+#include "./libft/libft.h"
 #include "get_next_line.h"
 
-static int		endline(char *buff)
+static int		find_endline(char *buff)
 {
-	int			count;
+	int			eval_lengh;
 
-	count = 0;
-	while (buff[count] != ENDL && buff[count])
-		count++;
-	if (buff[count] == ENDL)
+	eval_lengh = 0;
+	while (buff[eval_lengh] != ENDL && buff[eval_lengh])
+		eval_lengh++;
+	if (buff[eval_lengh] == ENDL)
 	{
-		buff[count] = END;
-		return (count);
+		buff[eval_lengh] = END;
+		return (eval_lengh);
 	}
 	else
 		return (-1);
 }
 
-static char		*join(char *buff, char *tab)
+static char		*join_datas(char *buff, char *tab)
 {
 	size_t		i;
 	size_t		j;
@@ -50,13 +50,13 @@ static char		*join(char *buff, char *tab)
 	return (ptr);
 }
 
-static int		checking(char **buff, char **tab, char **line)
+static int		check_case(char **buff, char **tab, char **line)
 {
 	char		*ptr;
 	int			final;
 
-	*buff = join(*buff, *tab);
-	final = endline(*buff);
+	*buff = join_datas(*buff, *tab);
+	final = find_endline(*buff);
 	if (final > -1)
 	{
 		*line = ft_strdup(*buff);
@@ -72,21 +72,21 @@ int				get_next_line(int const fd, char **line)
 {
 	static char	*buff[12000];
 	char		*tmp;
-	int			result;
-	int			ret;
+	int			trt_case;
+	int			something;
 
 	tmp = ft_strnew(BUFF_SIZE);
-	if (!line || BUFF_SIZE <= 0 || fd < 0 || (ret = read(fd, tmp, 0)) < 0)
+	if (!line || BUFF_SIZE <= 0 || fd < 0 || (something = read(fd, tmp, 0)) < 0)
 		return (-1);
-	while ((ret = read(fd, tmp, BUFF_SIZE)) > 0)
+	while ((something = read(fd, tmp, BUFF_SIZE)) > 0)
 	{
-		result = checking(&buff[fd], &tmp, line);
+		trt_case = check_case(&buff[fd], &tmp, line);
 		free(tmp);
-		if (result == 1)
+		if (trt_case == 1)
 			return (1);
 		tmp = ft_strnew(BUFF_SIZE);
 	}
-	if ((result = checking(&buff[fd], &tmp, line)))
+	if ((trt_case = check_case(&buff[fd], &tmp, line)))
 		return (1);
 	else if (ft_strlen(buff[fd]) > 0)
 	{
@@ -94,5 +94,5 @@ int				get_next_line(int const fd, char **line)
 		ft_strdel(&buff[fd]);
 		return (1);
 	}
-	return (result);
+	return (trt_case);
 }
